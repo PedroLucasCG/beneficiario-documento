@@ -23,8 +23,4 @@ public class DocumentoSalvarRequest {
     private String nome;
     @NotBlank
     private String descricao;
-
-    public Documento converteParaDocumento() {
-        return new Documento(this);
-    }
 }

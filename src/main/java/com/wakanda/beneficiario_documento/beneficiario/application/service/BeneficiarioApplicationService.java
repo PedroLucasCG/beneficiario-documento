@@ -23,11 +23,11 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
     public BeneficiarioSalvoResponse salvarBeneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
         log.info("[inicio] BeneficiarioApplicationService - salvarBeneficiario");
         Beneficiario beneficiario = new Beneficiario(beneficiarioSalvarRequest);
-        List<Documento> documentos = beneficiarioSalvarRequest.getDocumentosSalvarRequests().stream()
-                        .map(DocumentoSalvarRequest::converteParaDocumento)
-                        .collect(Collectors.toList());
         Beneficiario beneficiarioSalvo
-                = beneficarioRepository.salvarBeneficiarioComDocumentosOpcionalmente(beneficiario, documentos);
+                = beneficarioRepository.salvarBeneficiarioComDocumentosOpcionalmente(beneficiario);
+        List<Documento> documentos = beneficiarioSalvarRequest.getDocumentosSalvarRequests().stream()
+                        .map((documentoRequest -> new Documento(documentoRequest, beneficiarioSalvo)))
+                        .collect(Collectors.toList());
         BeneficiarioSalvoResponse beneficiarioSalvoResponse = new BeneficiarioSalvoResponse(beneficiarioSalvo);
         log.info("[finaliza] BeneficiarioApplicationService - salvarBeneficiario");
         return beneficiarioSalvoResponse;

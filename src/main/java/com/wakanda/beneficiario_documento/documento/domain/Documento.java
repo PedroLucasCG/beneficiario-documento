@@ -34,11 +34,12 @@ public class Documento {
     @JoinColumn(name="beneficiario_id", nullable=false)
     private Beneficiario beneficiario;
 
-    public Documento(DocumentoSalvarRequest documentoSalvarRequest) {
+    public Documento(DocumentoSalvarRequest documentoSalvarRequest, Beneficiario beneficiario) {
         this.id = UUID.randomUUID();
         this.tipoDocumento = documentoSalvarRequest.getTipoDocumento();
         this.nome = documentoSalvarRequest.getNome();
         this.descricao = documentoSalvarRequest.getDescricao();
         this.dataInclusao = LocalDate.now();
+        this.beneficiario = beneficiario;
     }
 }
