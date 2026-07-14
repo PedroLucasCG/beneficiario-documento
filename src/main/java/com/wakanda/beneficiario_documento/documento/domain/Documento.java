@@ -1,11 +1,15 @@
 package com.wakanda.beneficiario_documento.documento.domain;
 
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -29,4 +33,12 @@ public class Documento {
     @ManyToOne
     @JoinColumn(name="beneficiario_id", nullable=false)
     private Beneficiario beneficiario;
+
+    public Documento(DocumentoSalvarRequest documentoSalvarRequest) {
+        this.id = UUID.randomUUID();
+        this.tipoDocumento = documentoSalvarRequest.getTipoDocumento();
+        this.nome = documentoSalvarRequest.getNome();
+        this.descricao = documentoSalvarRequest.getDescricao();
+        this.dataInclusao = LocalDate.now();
+    }
 }

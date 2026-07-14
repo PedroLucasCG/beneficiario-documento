@@ -20,5 +20,5 @@ public class BeneficiarioSalvarRequest {
     private String telefone;
     @NotBlank
     private LocalDate dataNascimento;
-    private List<DocumentoSalvarRequest> documentos;
+    private List<DocumentoSalvarRequest> documentosSalvarRequests;
 }

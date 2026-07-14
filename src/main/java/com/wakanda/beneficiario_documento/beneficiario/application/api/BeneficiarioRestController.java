@@ -15,7 +15,8 @@ public class BeneficiarioRestController implements BeneficiarioAPI {
     public BeneficiarioSalvoResponse salvarBeneficarioComDocumentos
             (BeneficiarioSalvarRequest beneficiarioSAlvarRequest) {
         log.info("[inicio] BeneficiarioRestController - salvarBeneficarioComDocumentos");
-        BeneficiarioSalvoResponse beneficiarioSalvoResponse = beneficiarioService.salvarBeneficiario(beneficiarioSAlvarRequest);
+        BeneficiarioSalvoResponse beneficiarioSalvoResponse
+                = beneficiarioService.salvarBeneficiario(beneficiarioSAlvarRequest);
         log.info("[finaliza] BeneficiarioRestController - salvarBeneficarioComDocumentos");
         return beneficiarioSalvoResponse;
     }

@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento.beneficiario.domain;
 
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.documento.domain.Documento;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,4 +29,12 @@ public class Beneficiario {
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.MERGE, mappedBy="beneficiario")
     private Set<Documento> documentos;
+
+    public Beneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
+        this.id = UUID.randomUUID();
+        this.nome = beneficiarioSalvarRequest.getNome();
+        this.telefone = beneficiarioSalvarRequest.getTelefone();
+        this.dataNascimento = beneficiarioSalvarRequest.getDataNascimento();
+        this.dataInclusao = LocalDate.now();
+    }
 }

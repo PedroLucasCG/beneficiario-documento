@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento.beneficiario.application.api;
 
+import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,12 @@ public class BeneficiarioSalvoResponse {
     private String telefone;
     private LocalDate dataNascimento;
     private List<DocumentoSalvoResponse> documentos;
+
+    public BeneficiarioSalvoResponse(Beneficiario beneficiarioSalvo) {
+        this.id = beneficiarioSalvo.getId();
+        this.nome = beneficiarioSalvo.getNome();
+        this.telefone = beneficiarioSalvo.getTelefone();
+        this.dataNascimento = beneficiarioSalvo.getDataNascimento();
+        this.documentos = DocumentoSalvoResponse.converte(beneficiarioSalvo.getDocumentos());
+    }
 }
