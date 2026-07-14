@@ -28,7 +28,7 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
                         .collect(Collectors.toList());
         Beneficiario beneficiarioSalvo
                 = beneficarioRepository.salvarBeneficiarioComDocumentosOpcionalmente(beneficiario, documentos);
-        BeneficiarioSalvoResponse beneficiarioSalvoResponse =  new BeneficiarioSalvoResponse(beneficiarioSalvo);
+        BeneficiarioSalvoResponse beneficiarioSalvoResponse = new BeneficiarioSalvoResponse(beneficiarioSalvo);
         log.info("[finaliza] BeneficiarioApplicationService - salvarBeneficiario");
         return beneficiarioSalvoResponse;
     }
