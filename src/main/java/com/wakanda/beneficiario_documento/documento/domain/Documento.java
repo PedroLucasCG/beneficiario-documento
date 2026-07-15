@@ -21,6 +21,7 @@ public class Documento {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoDocumento tipoDocumento;
     @Column(nullable = false)
     private String nome;

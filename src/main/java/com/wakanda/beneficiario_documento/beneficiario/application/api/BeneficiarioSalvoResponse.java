@@ -27,4 +27,13 @@ public class BeneficiarioSalvoResponse {
         this.dataNascimento = beneficiarioSalvo.getDataNascimento();
         this.documentos = DocumentoSalvoResponse.converte(beneficiarioSalvo.getDocumentos());
     }
+
+    public BeneficiarioSalvoResponse
+            (Beneficiario beneficiarioSalvo, List<DocumentoSalvoResponse> documentoSalvoResponses) {
+        this.id = beneficiarioSalvo.getId();
+        this.nome = beneficiarioSalvo.getNome();
+        this.telefone = beneficiarioSalvo.getTelefone();
+        this.dataNascimento = beneficiarioSalvo.getDataNascimento();
+        this.documentos = documentoSalvoResponses;
+    }
 }

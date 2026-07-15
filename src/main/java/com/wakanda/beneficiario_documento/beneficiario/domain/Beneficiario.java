@@ -15,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@ToString
 public class Beneficiario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,7 +29,7 @@ public class Beneficiario {
     private LocalDate dataInclusao;
     private LocalDate dataAtualizacao;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.MERGE, mappedBy="beneficiario")
+    @OneToMany(mappedBy="beneficiario")
     private List<Documento> documentos;
 
     public Beneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
