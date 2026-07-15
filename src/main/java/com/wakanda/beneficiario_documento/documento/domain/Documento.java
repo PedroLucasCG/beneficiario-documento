@@ -36,6 +36,10 @@ public class Documento {
     private Beneficiario beneficiario;
 
     public Documento(DocumentoSalvarRequest documentoSalvarRequest, Beneficiario beneficiario) {
+        if (documentoSalvarRequest == null) {
+            return;
+        }
+
         this.tipoDocumento = documentoSalvarRequest.getTipoDocumento();
         this.nome = documentoSalvarRequest.getNome();
         this.descricao = documentoSalvarRequest.getDescricao();
