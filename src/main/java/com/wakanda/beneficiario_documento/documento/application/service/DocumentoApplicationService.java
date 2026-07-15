@@ -1,0 +1,36 @@
+package com.wakanda.beneficiario_documento.documento.application.service;
+
+import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
+import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
+import com.wakanda.beneficiario_documento.documento.domain.Documento;
+import com.wakanda.beneficiario_documento.documento.infra.DocumentoRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Log4j2
+@Service
+@RequiredArgsConstructor
+public class DocumentoApplicationService implements DocumentoService {
+    private final DocumentoRepository documentoRepository;
+
+    @Override
+    public List<DocumentoSalvoResponse> salvarDocumentos
+            (List<DocumentoSalvarRequest> documentosSalvarRequests, Beneficiario beneficiario) {
+        log.info("[inicio] DocumentoApplicationService - salvarDocumento");
+        List<Documento> documentos = documentosSalvarRequests.stream()
+                .map((documentoRequest) -> {
+                   Documento documento = new Documento(documentoRequest, beneficiario);
+                   return documentoRepository.salvarDocumentoParaBeneficiario(documento);
+                })
+                .toList();
+        List<DocumentoSalvoResponse> documentosSalvarResponses = DocumentoSalvoResponse.converte(documentos);
+        log.info("[finaliza] DocumentoApplicationService - salvarDocumento");
+        return documentosSalvarResponses;
+    }
+}

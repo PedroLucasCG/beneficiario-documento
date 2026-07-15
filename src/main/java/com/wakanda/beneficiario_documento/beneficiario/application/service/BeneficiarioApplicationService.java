@@ -4,20 +4,17 @@ import com.wakanda.beneficiario_documento.beneficiario.application.api.Beneficia
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvoResponse;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
-import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
-import com.wakanda.beneficiario_documento.documento.domain.Documento;
+import com.wakanda.beneficiario_documento.documento.application.service.DocumentoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
 @RequiredArgsConstructor
 public class BeneficiarioApplicationService implements BeneficiarioService {
     private final BeneficarioRepository beneficarioRepository;
+    private final DocumentoService documentoService;
 
     @Override
     public BeneficiarioSalvoResponse salvarBeneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
@@ -25,9 +22,7 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
         Beneficiario beneficiario = new Beneficiario(beneficiarioSalvarRequest);
         Beneficiario beneficiarioSalvo
                 = beneficarioRepository.salvarBeneficiarioComDocumentosOpcionalmente(beneficiario);
-        List<Documento> documentos = beneficiarioSalvarRequest.getDocumentosSalvarRequests().stream()
-                        .map((documentoRequest -> new Documento(documentoRequest, beneficiarioSalvo)))
-                        .collect(Collectors.toList());
+        documentoService.salvarDocumentos(beneficiarioSalvarRequest.getDocumentosSalvarRequests(), beneficiarioSalvo);
         BeneficiarioSalvoResponse beneficiarioSalvoResponse = new BeneficiarioSalvoResponse(beneficiarioSalvo);
         log.info("[finaliza] BeneficiarioApplicationService - salvarBeneficiario");
         return beneficiarioSalvoResponse;

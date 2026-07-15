@@ -27,7 +27,7 @@ public class DocumentoSalvoResponse {
         this.descricao = documento.getDescricao();
     }
 
-    public static List<DocumentoSalvoResponse> converte(Set<Documento> documentos) {
+    public static List<DocumentoSalvoResponse> converte(List<Documento> documentos) {
         return documentos.stream()
                 .map(DocumentoSalvoResponse::new)
                 .collect(Collectors.toList());
