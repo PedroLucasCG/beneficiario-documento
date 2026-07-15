@@ -5,6 +5,7 @@ import com.wakanda.beneficiario_documento.beneficiario.application.api.Beneficia
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
 import com.wakanda.beneficiario_documento.documento.application.service.DocumentoService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,11 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
     private final DocumentoService documentoService;
 
     @Override
+    @Transactional
     public BeneficiarioSalvoResponse salvarBeneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
         log.info("[inicio] BeneficiarioApplicationService - salvarBeneficiario");
         Beneficiario beneficiario = new Beneficiario(beneficiarioSalvarRequest);
-        Beneficiario beneficiarioSalvo
-                = beneficarioRepository.salvarBeneficiarioComDocumentosOpcionalmente(beneficiario);
+        Beneficiario beneficiarioSalvo = beneficarioRepository.salvarBeneficiario(beneficiario);
         documentoService.salvarDocumentos(beneficiarioSalvarRequest.getDocumentosSalvarRequests(), beneficiarioSalvo);
         BeneficiarioSalvoResponse beneficiarioSalvoResponse = new BeneficiarioSalvoResponse(beneficiarioSalvo);
         log.info("[finaliza] BeneficiarioApplicationService - salvarBeneficiario");

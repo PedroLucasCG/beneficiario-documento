@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -28,10 +29,9 @@ public class Beneficiario {
     private LocalDate dataAtualizacao;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.MERGE, mappedBy="beneficiario")
-    private Set<Documento> documentos;
+    private List<Documento> documentos;
 
     public Beneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
-        this.id = UUID.randomUUID();
         this.nome = beneficiarioSalvarRequest.getNome();
         this.telefone = beneficiarioSalvarRequest.getTelefone();
         this.dataNascimento = beneficiarioSalvarRequest.getDataNascimento();

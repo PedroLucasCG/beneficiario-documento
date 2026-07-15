@@ -35,7 +35,6 @@ public class Documento {
     private Beneficiario beneficiario;
 
     public Documento(DocumentoSalvarRequest documentoSalvarRequest, Beneficiario beneficiario) {
-        this.id = UUID.randomUUID();
         this.tipoDocumento = documentoSalvarRequest.getTipoDocumento();
         this.nome = documentoSalvarRequest.getNome();
         this.descricao = documentoSalvarRequest.getDescricao();

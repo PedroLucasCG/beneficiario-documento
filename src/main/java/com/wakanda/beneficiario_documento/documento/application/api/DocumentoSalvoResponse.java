@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -28,6 +29,9 @@ public class DocumentoSalvoResponse {
     }
 
     public static List<DocumentoSalvoResponse> converte(List<Documento> documentos) {
+        if (documentos == null || documentos.isEmpty()) {
+            return Collections.emptyList();
+        }
         return documentos.stream()
                 .map(DocumentoSalvoResponse::new)
                 .collect(Collectors.toList());

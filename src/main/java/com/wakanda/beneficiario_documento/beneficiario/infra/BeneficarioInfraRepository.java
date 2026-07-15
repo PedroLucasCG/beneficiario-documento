@@ -12,7 +12,7 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
     private final BeneficiarioH2Repository beneficiarioH2Repository;
 
     @Override
-    public Beneficiario salvarBeneficiarioComDocumentosOpcionalmente(Beneficiario beneficiario) {
+    public Beneficiario salvarBeneficiario(Beneficiario beneficiario) {
         log.info("[inicio] BeneficarioH2Repository - salvarBeneficiarioComDocumentosOpcionalmente");
         Beneficiario beneficiarioSalvo = beneficiarioH2Repository.save(beneficiario);
         log.info("[finaliza] BeneficarioH2Repository - salvarBeneficiarioComDocumentosOpcionalmente");
