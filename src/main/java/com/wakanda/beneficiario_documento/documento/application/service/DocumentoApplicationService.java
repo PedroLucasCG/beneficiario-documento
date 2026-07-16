@@ -1,6 +1,7 @@
 package com.wakanda.beneficiario_documento.documento.application.service;
 
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.documento.application.api.DocumentoListResponse;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
 import com.wakanda.beneficiario_documento.documento.domain.Documento;
@@ -32,5 +33,14 @@ public class DocumentoApplicationService implements DocumentoService {
         List<DocumentoSalvoResponse> documentosSalvarResponses = DocumentoSalvoResponse.converte(documentos);
         log.info("[finaliza] DocumentoApplicationService - salvarDocumento");
         return documentosSalvarResponses;
+    }
+
+    @Override
+    public List<DocumentoListResponse> retornarDocumentosBeneficiario(UUID idBeneficiario) {
+        log.info("[inicio] DocumentoApplicationService - retornarDocumentosBeneficiario");
+        List<Documento> documentos = documentoRepository.retornarTodosDocumentoBeneficiario(idBeneficiario);
+        List<DocumentoListResponse> documentoListResponses = DocumentoListResponse.converter(documentos);
+        log.info("[finaliza] DocumentoApplicationService - retornarDocumentosBeneficiario");
+        return documentoListResponses;
     }
 }
