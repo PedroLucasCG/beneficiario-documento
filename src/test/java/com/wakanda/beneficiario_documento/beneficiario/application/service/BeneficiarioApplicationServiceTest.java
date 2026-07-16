@@ -54,4 +54,26 @@ class BeneficiarioApplicationServiceTest {
                 beneficiarioSalvoResponseRetornado.getDocumentos().size()
         );
     }
+
+    @Test
+    void salvarBeneficiarioSemDocumentoComSucesso() {
+        Beneficiario beneficiario = DataHelper.createBeneficiario();
+        BeneficiarioSalvarRequest beneficiarioSalvarRequest = DataHelper.getBeneficiarioSalvarRequest();
+        BeneficiarioSalvoResponse beneficiarioSalvoResponse = DataHelper.getBeneficiarioSalvoResponse();
+
+        when(beneficarioRepository.salvarBeneficiario(any())).thenReturn(beneficiario);
+        when(documentoService.salvarDocumentos(any(), any()))
+                .thenReturn(List.of());
+
+        BeneficiarioSalvoResponse beneficiarioSalvoResponseRetornado = service.salvarBeneficiario(beneficiarioSalvarRequest);
+
+        verify(beneficarioRepository, times(1)).salvarBeneficiario(any());
+        verify(documentoService, times(1)).salvarDocumentos(any(), any());
+        assertEquals(BeneficiarioSalvoResponse.class, beneficiarioSalvoResponseRetornado.getClass());
+        assertEquals(beneficiarioSalvoResponse.getNome(), beneficiarioSalvoResponseRetornado.getNome());
+        assertEquals(
+                0,
+                beneficiarioSalvoResponseRetornado.getDocumentos().size()
+        );
+    }
 }
