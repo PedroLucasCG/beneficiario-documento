@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento;
 
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioListResponse;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvoResponse;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
@@ -18,7 +19,7 @@ public class DataHelper {
     }
 
     public static Beneficiario createBeneficiario() {
-        return Beneficiario.builder().id(beneficiario1).nome("Pedro Lucas").build();
+        return Beneficiario.builder().id(beneficiario1).nome("Pedro Lucas").documentos(getDocumentos()).build();
     }
 
     public static BeneficiarioSalvarRequest getBeneficiarioSalvarRequest() {
@@ -33,11 +34,23 @@ public class DataHelper {
         );
     }
 
+    public static List<Beneficiario> getBeneficiarios() {
+        return List.of(
+                createBeneficiario(),
+                createBeneficiario(),
+                createBeneficiario()
+        );
+    }
+
     public static List<DocumentoSalvoResponse> getDocumentosSalvoResponse() {
         return DocumentoSalvoResponse.converte(getDocumentos());
     }
 
     public static BeneficiarioSalvoResponse getBeneficiarioSalvoResponse() {
         return new  BeneficiarioSalvoResponse(createBeneficiario(), getDocumentosSalvoResponse());
+    }
+
+    public static BeneficiarioListResponse getBeneficiarioListResponse() {
+        return new BeneficiarioListResponse(createBeneficiario());
     }
 }

@@ -1,6 +1,7 @@
 package com.wakanda.beneficiario_documento.beneficiario.application.service;
 
 import com.wakanda.beneficiario_documento.DataHelper;
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioListResponse;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvoResponse;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
@@ -78,5 +79,24 @@ class BeneficiarioApplicationServiceTest {
     }
 
     @Test
-    void retornarTodosBeneficiariosComSucesso() {}
+    void retornarTodosBeneficiariosComSucesso() {
+        List<Beneficiario> beneficiarios = DataHelper.getBeneficiarios();
+
+        when(beneficarioRepository.retornarTodosBeneficiarios()).thenReturn(beneficiarios);
+
+        List<BeneficiarioListResponse> beneficiarioListResponses = service.retornarTodosBeneficiarios();
+
+        verify(beneficarioRepository, times(1)).retornarTodosBeneficiarios();
+        assertEquals(BeneficiarioListResponse.class, beneficiarioListResponses.get(0).getClass());
+    }
+
+    @Test
+    void retornarTodosBeneficiariosVaziosComSucesso() {
+        when(beneficarioRepository.retornarTodosBeneficiarios()).thenReturn(List.of());
+
+        List<BeneficiarioListResponse> beneficiarioListResponses = service.retornarTodosBeneficiarios();
+
+        verify(beneficarioRepository, times(1)).retornarTodosBeneficiarios();
+        assertEquals(0, beneficiarioListResponses.size());
+    }
 }
