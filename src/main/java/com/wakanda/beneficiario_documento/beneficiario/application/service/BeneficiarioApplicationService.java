@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento.beneficiario.application.service;
 
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioListResponse;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvoResponse;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
@@ -33,6 +34,12 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
                 = new BeneficiarioSalvoResponse(beneficiarioSalvo, documentoSalvoResponses);
         log.info("[finaliza] BeneficiarioApplicationService - salvarBeneficiario");
         return beneficiarioSalvoResponse;
+    }
+
+    @Override
+    public List<BeneficiarioListResponse> retornarTodosBeneficiarios() {
+
+        return List.of();
     }
 
     private Beneficiario buscarBeneficiarioPorId(UUID id) {
