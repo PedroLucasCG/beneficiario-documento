@@ -20,7 +20,18 @@ public class BeneficiarioListResponse {
     private LocalDate dataInclusao;
     private LocalDate dataAtualizacao;
 
+    public BeneficiarioListResponse(Beneficiario beneficiario) {
+        this.id = beneficiario.getId();
+        this.nome = beneficiario.getNome();
+        this.telefone = beneficiario.getTelefone();
+        this.dataNascimento = beneficiario.getDataNascimento();
+        this.dataInclusao = beneficiario.getDataInclusao();
+        this.dataAtualizacao = beneficiario.getDataAtualizacao();
+    }
+
     public static List<BeneficiarioListResponse> converter(List<Beneficiario> beneficiarios) {
-        return null;
+        return beneficiarios.stream()
+                .map(BeneficiarioListResponse::new)
+                .toList();
     }
 }
