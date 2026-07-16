@@ -76,4 +76,7 @@ class BeneficiarioApplicationServiceTest {
                 beneficiarioSalvoResponseRetornado.getDocumentos().size()
         );
     }
+
+    @Test
+    void retornarTodosBeneficiariosComSucesso() {}
 }

@@ -34,7 +34,7 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
     @Override
     public List<Beneficiario> retornarTodosBeneficiarios() {
         log.info("[inicio] BeneficarioInfraRepository - retornarTodosBeneficiarios");
-        List<Beneficiario> beneficiarios = beneficiarioH2Repository.findAll();
+        List<Beneficiario> beneficiarios = beneficiarioH2Repository.findAllBeneficiarioWithDocuments();
         log.info("[finaliza] BeneficarioInfraRepository - retornarTodosBeneficiarios");
         return beneficiarios;
     }

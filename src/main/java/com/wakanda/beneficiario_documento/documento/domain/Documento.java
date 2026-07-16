@@ -1,21 +1,19 @@
 package com.wakanda.beneficiario_documento.documento.domain;
 
-import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@ToString
 public class Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,7 +29,7 @@ public class Documento {
     private LocalDate dataInclusao;
     private LocalDate dataAtualizacao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="beneficiario_id", nullable=false)
     private Beneficiario beneficiario;
 

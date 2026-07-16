@@ -1,6 +1,7 @@
 package com.wakanda.beneficiario_documento.beneficiario.application.api;
 
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.documento.application.api.DocumentoListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class BeneficiarioListResponse {
     private UUID id;
     private String nome;
     private String telefone;
+    private List<DocumentoListResponse> documentos;
     private LocalDate dataNascimento;
     private LocalDate dataInclusao;
     private LocalDate dataAtualizacao;
@@ -27,6 +29,7 @@ public class BeneficiarioListResponse {
         this.dataNascimento = beneficiario.getDataNascimento();
         this.dataInclusao = beneficiario.getDataInclusao();
         this.dataAtualizacao = beneficiario.getDataAtualizacao();
+        this.documentos = DocumentoListResponse.converter(beneficiario.getDocumentos());
     }
 
     public static List<BeneficiarioListResponse> converter(List<Beneficiario> beneficiarios) {
