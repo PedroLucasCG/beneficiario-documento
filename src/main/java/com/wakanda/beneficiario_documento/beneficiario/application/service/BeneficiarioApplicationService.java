@@ -38,8 +38,11 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
 
     @Override
     public List<BeneficiarioListResponse> retornarTodosBeneficiarios() {
-
-        return List.of();
+        log.info("[inicio] BeneficiarioApplicationService - retornarTodosBeneficiarios");
+        List<Beneficiario> beneficiarios = beneficarioRepository.retornarTodosBeneficiarios();
+        List<BeneficiarioListResponse> beneficiarioListResponse = BeneficiarioListResponse.converter(beneficiarios);
+        log.info("[finaliza] BeneficiarioApplicationService - retornarTodosBeneficiarios");
+        return beneficiarioListResponse;
     }
 
     private Beneficiario buscarBeneficiarioPorId(UUID id) {
