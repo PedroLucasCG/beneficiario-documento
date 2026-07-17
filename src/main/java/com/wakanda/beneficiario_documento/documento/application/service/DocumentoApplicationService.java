@@ -2,6 +2,7 @@ package com.wakanda.beneficiario_documento.documento.application.service;
 
 import com.wakanda.beneficiario_documento.beneficiario.application.service.BeneficiarioService;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoListResponse;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DocumentoApplicationService implements DocumentoService {
     private final DocumentoRepository documentoRepository;
-    private final BeneficiarioService beneficarioService;
+    private final BeneficarioRepository beneficarioRepository;
 
     @Override
     public List<DocumentoSalvoResponse> salvarDocumentos
@@ -39,7 +40,7 @@ public class DocumentoApplicationService implements DocumentoService {
     @Override
     public List<DocumentoListResponse> retornarDocumentosBeneficiario(UUID idBeneficiario) {
         log.info("[inicio] DocumentoApplicationService - retornarDocumentosBeneficiario");
-        beneficarioService.buscarBeneficiarioPorId(idBeneficiario);
+        beneficarioRepository.buscarBeneficiarioPorId(idBeneficiario);
         List<Documento> documentos = documentoRepository.retornarTodosDocumentoBeneficiario(idBeneficiario);
         List<DocumentoListResponse> documentoListResponses = DocumentoListResponse.converter(documentos);
         log.info("[finaliza] DocumentoApplicationService - retornarDocumentosBeneficiario");

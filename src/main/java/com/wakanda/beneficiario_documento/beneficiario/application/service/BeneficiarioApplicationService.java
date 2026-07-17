@@ -49,18 +49,9 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
     }
 
     @Override
-    public Beneficiario buscarBeneficiarioPorId(UUID id) {
-        log.info("[inicio] BeneficiarioApplicationService - buscarBeneficiarioPorId");
-        Beneficiario beneficiario = beneficarioRepository.buscarBeneficiarioPorId(id).orElseThrow(() ->
-                APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"));
-        log.info("[finaliza] BeneficiarioApplicationService - buscarBeneficiarioPorId");
-        return beneficiario;
-    }
-
-    @Override
     public Beneficiario atualizarBeneficiario(BeneficiarioAtualizarRequest beneficiarioAtualizarRequest, UUID idBeneficiario) {
         log.info("[inicio] BeneficiarioApplicationService - atualizarBeneficiario");
-        Beneficiario beneficiario = buscarBeneficiarioPorId(idBeneficiario);
+        Beneficiario beneficiario = beneficarioRepository.buscarBeneficiarioPorId(idBeneficiario);
         beneficiario.atualizar(beneficiarioAtualizarRequest);
         Beneficiario beneficiarioAtualizado = beneficarioRepository.salvarBeneficiario(beneficiario);
         log.info("[finaliza] BeneficiarioApplicationService - atualizarBeneficiario");

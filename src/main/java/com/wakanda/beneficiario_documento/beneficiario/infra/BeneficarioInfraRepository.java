@@ -1,8 +1,10 @@
 package com.wakanda.beneficiario_documento.beneficiario.infra;
 
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.handler.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,9 +26,10 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
     }
 
     @Override
-    public Optional<Beneficiario> buscarBeneficiarioPorId(UUID id) {
+    public Beneficiario buscarBeneficiarioPorId(UUID id) {
         log.info("[inicio] BeneficarioInfraRepository - buscarBeneficiarioPorId");
-        Optional<Beneficiario> beneficiario = beneficiarioH2Repository.findById(id);
+        Beneficiario beneficiario = beneficiarioH2Repository.findById(id).orElseThrow(() ->
+                APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"));;
         log.info("[finaliza] BeneficarioInfraRepository - buscarBeneficiarioPorId");
         return beneficiario;
     }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "v1/beneficiario")
@@ -23,5 +24,5 @@ public interface BeneficiarioAPI {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void atualizarCadastroBeneficiario(
             @RequestBody @Valid BeneficiarioAtualizarRequest beneficiarioAtualizarRequest,
-            @PathVariable Long idBeneficiario);
+            @PathVariable UUID idBeneficiario);
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface BeneficarioRepository {
     Beneficiario salvarBeneficiario(Beneficiario beneficiario);
 
-    Optional<Beneficiario> buscarBeneficiarioPorId(UUID id);
+    Beneficiario buscarBeneficiarioPorId(UUID id);
 
     List<Beneficiario> retornarTodosBeneficiarios();
 }

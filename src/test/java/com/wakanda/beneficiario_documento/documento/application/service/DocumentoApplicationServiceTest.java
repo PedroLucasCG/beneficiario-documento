@@ -34,8 +34,6 @@ class DocumentoApplicationServiceTest {
     @Mock
     private DocumentoRepository documentoRepository;
     @Mock
-    private BeneficiarioApplicationService beneficiarioApplicationService;
-    @Mock
     private BeneficarioRepository beneficarioRepository;
 
     @Test
@@ -60,13 +58,13 @@ class DocumentoApplicationServiceTest {
         Beneficiario beneficiario = DataHelper.createBeneficiario();
         List<Documento> documentos = DataHelper.getDocumentos();
 
-        when(beneficiarioApplicationService.buscarBeneficiarioPorId(any())).thenReturn(beneficiario);
+        when(beneficarioRepository.buscarBeneficiarioPorId(any())).thenReturn(beneficiario);
         when(documentoRepository.retornarTodosDocumentoBeneficiario(beneficiario.getId())).thenReturn(documentos);
 
         List<DocumentoListResponse> documentoListResponses = service.retornarDocumentosBeneficiario(beneficiario.getId());
 
         verify(documentoRepository, times(1)).retornarTodosDocumentoBeneficiario(any());
-        verify(beneficiarioApplicationService, times(1)).buscarBeneficiarioPorId(any());
+        verify(beneficarioRepository, times(1)).buscarBeneficiarioPorId(any());
         assertEquals(DocumentoListResponse.class, documentoListResponses.get(0).getClass());
         assertEquals(documentos.size(), documentoListResponses.size());
     }
@@ -76,13 +74,13 @@ class DocumentoApplicationServiceTest {
         Beneficiario beneficiario = DataHelper.createBeneficiario();
 
         doThrow(APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"))
-                .when(beneficiarioApplicationService).buscarBeneficiarioPorId(any());
+                .when(beneficarioRepository).buscarBeneficiarioPorId(any());
 
         var exception = assertThrows(APIException.class, () -> {
             service.retornarDocumentosBeneficiario(beneficiario.getId());
         });
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusException());
         verify(documentoRepository, times(0)).retornarTodosDocumentoBeneficiario(any());
-        verify(beneficiarioApplicationService, times(1)).buscarBeneficiarioPorId(any());
+        verify(beneficarioRepository, times(1)).buscarBeneficiarioPorId(any());
     }
 }
