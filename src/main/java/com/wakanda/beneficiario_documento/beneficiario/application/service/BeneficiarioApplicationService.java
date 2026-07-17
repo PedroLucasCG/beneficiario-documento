@@ -7,9 +7,11 @@ import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
 import com.wakanda.beneficiario_documento.documento.application.service.DocumentoService;
+import com.wakanda.beneficiario_documento.handler.APIException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,10 +47,10 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
         return beneficiarioListResponse;
     }
 
-    private Beneficiario buscarBeneficiarioPorId(UUID id) {
+    public Beneficiario buscarBeneficiarioPorId(UUID id) {
         log.info("[inicio] BeneficiarioApplicationService - buscarBeneficiarioPorId");
-        Beneficiario beneficiario = beneficarioRepository.buscarBeneficiarioPorId(id)
-                .orElseThrow(IllegalArgumentException::new);
+        Beneficiario beneficiario = beneficarioRepository.buscarBeneficiarioPorId(id).orElseThrow(() ->
+                APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"));
         log.info("[finaliza] BeneficiarioApplicationService - buscarBeneficiarioPorId");
         return beneficiario;
     }
