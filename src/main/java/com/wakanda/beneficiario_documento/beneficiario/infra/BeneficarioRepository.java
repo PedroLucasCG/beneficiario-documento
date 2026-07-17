@@ -12,4 +12,6 @@ public interface BeneficarioRepository {
     Beneficiario buscarBeneficiarioPorId(UUID id);
 
     List<Beneficiario> retornarTodosBeneficiarios();
+
+    void deletarBeneficiario(Beneficiario beneficiario);
 }

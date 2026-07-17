@@ -41,4 +41,11 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
         log.info("[finaliza] BeneficarioInfraRepository - retornarTodosBeneficiarios");
         return beneficiarios;
     }
+
+    @Override
+    public void deletarBeneficiario(Beneficiario beneficiario) {
+        log.info("[inicio] BeneficarioInfraRepository - deletarBeneficiario");
+        beneficiarioH2Repository.delete(beneficiario);
+        log.info("[finaliza] BeneficarioInfraRepository - deletarBeneficiario");
+    }
 }

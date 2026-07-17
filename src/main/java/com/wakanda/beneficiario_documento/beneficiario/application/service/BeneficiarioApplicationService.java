@@ -6,6 +6,7 @@ import com.wakanda.beneficiario_documento.beneficiario.application.api.Beneficia
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvoResponse;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
+import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficiarioH2Repository;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
 import com.wakanda.beneficiario_documento.documento.application.service.DocumentoService;
 import com.wakanda.beneficiario_documento.handler.APIException;
@@ -24,6 +25,7 @@ import java.util.UUID;
 public class BeneficiarioApplicationService implements BeneficiarioService {
     private final BeneficarioRepository beneficarioRepository;
     private final DocumentoService documentoService;
+    private final BeneficiarioH2Repository beneficiarioH2Repository;
 
     @Override
     @Transactional
@@ -56,5 +58,14 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
         Beneficiario beneficiarioAtualizado = beneficarioRepository.salvarBeneficiario(beneficiario);
         log.info("[finaliza] BeneficiarioApplicationService - atualizarBeneficiario");
         return beneficiarioAtualizado;
+    }
+
+    @Override
+    public Beneficiario deleteBeneficiario(UUID idBeneficiario) {
+        log.info("[inicio] BeneficiarioApplicationService - deleteBeneficiario");
+        Beneficiario beneficiario = beneficarioRepository.buscarBeneficiarioPorId(idBeneficiario);
+        beneficarioRepository.deletarBeneficiario(beneficiario);
+        log.info("[finaliza] BeneficiarioApplicationService - deleteBeneficiario");
+        return beneficiario;
     }
 }

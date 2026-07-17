@@ -15,4 +15,6 @@ public interface BeneficiarioService {
     List<BeneficiarioListResponse> retornarTodosBeneficiarios();
 
     Beneficiario atualizarBeneficiario(BeneficiarioAtualizarRequest beneficiarioAtualizarRequest, UUID idBeneficiario);
+
+    Beneficiario deleteBeneficiario(UUID idBeneficiario);
 }

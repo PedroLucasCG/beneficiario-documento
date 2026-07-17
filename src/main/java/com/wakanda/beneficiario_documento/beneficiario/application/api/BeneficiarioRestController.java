@@ -38,4 +38,11 @@ public class BeneficiarioRestController implements BeneficiarioAPI {
         beneficiarioService.atualizarBeneficiario(beneficiarioAtualizarRequest, idBeneficiario);
         log.info("[finaliza] BeneficiarioRestController - atualizarCadastroBeneficiario");
     }
+
+    @Override
+    public void deletarBeneficiario(UUID idBeneficiario) {
+        log.info("[inicio] BeneficiarioRestController - deletarBeneficiario");
+        beneficiarioService.deleteBeneficiario(idBeneficiario);
+        log.info("[finaliza] BeneficiarioRestController - deletarBeneficiario");
+    }
 }

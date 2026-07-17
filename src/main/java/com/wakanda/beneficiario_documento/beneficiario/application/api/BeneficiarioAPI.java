@@ -25,4 +25,8 @@ public interface BeneficiarioAPI {
     void atualizarCadastroBeneficiario(
             @RequestBody @Valid BeneficiarioAtualizarRequest beneficiarioAtualizarRequest,
             @PathVariable UUID idBeneficiario);
+
+    @DeleteMapping("/{idBeneficiario}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deletarBeneficiario(@PathVariable UUID idBeneficiario);
 }
