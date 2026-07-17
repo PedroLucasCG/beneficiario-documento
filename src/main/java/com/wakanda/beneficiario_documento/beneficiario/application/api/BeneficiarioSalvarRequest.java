@@ -1,6 +1,7 @@
 package com.wakanda.beneficiario_documento.beneficiario.application.api;
 
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,9 @@ public class BeneficiarioSalvarRequest {
     @NotBlank
     private String nome;
     private String telefone;
+    @NotBlank
+    @Email
+    private String email;
     @NotNull
     private LocalDate dataNascimento;
     private List<DocumentoSalvarRequest> documentosSalvarRequests;

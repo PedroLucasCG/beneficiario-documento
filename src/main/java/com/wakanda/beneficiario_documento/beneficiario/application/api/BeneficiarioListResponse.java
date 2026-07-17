@@ -17,6 +17,7 @@ public class BeneficiarioListResponse {
     private UUID id;
     private String nome;
     private String telefone;
+    private String email;
     private List<DocumentoListResponse> documentos;
     private LocalDate dataNascimento;
     private LocalDate dataInclusao;
@@ -26,6 +27,7 @@ public class BeneficiarioListResponse {
         this.id = beneficiario.getId();
         this.nome = beneficiario.getNome();
         this.telefone = beneficiario.getTelefone();
+        this.email = beneficiario.getEmail();
         this.dataNascimento = beneficiario.getDataNascimento();
         this.dataInclusao = beneficiario.getDataInclusao();
         this.dataAtualizacao = beneficiario.getDataAtualizacao();

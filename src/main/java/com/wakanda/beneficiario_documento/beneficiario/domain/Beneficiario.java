@@ -22,6 +22,8 @@ public class Beneficiario {
     @Column(nullable = false)
     private String nome;
     private String telefone;
+    @Column(nullable = false, unique = true)
+    private String email;
     @Column(nullable = false)
     private LocalDate dataNascimento;
     @Column(nullable = false)
@@ -34,6 +36,7 @@ public class Beneficiario {
     public Beneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
         this.nome = beneficiarioSalvarRequest.getNome();
         this.telefone = beneficiarioSalvarRequest.getTelefone();
+        this.email = beneficiarioSalvarRequest.getEmail();
         this.dataNascimento = beneficiarioSalvarRequest.getDataNascimento();
         this.dataInclusao = LocalDate.now();
     }
@@ -41,6 +44,7 @@ public class Beneficiario {
     public void atualizar(BeneficiarioAtualizarRequest beneficiarioAtualizarRequest) {
         this.nome = beneficiarioAtualizarRequest.getNome();
         this.telefone = beneficiarioAtualizarRequest.getTelefone();
+        this.email = beneficiarioAtualizarRequest.getEmail();
         this.dataNascimento = beneficiarioAtualizarRequest.getDataNascimento();
         this.dataAtualizacao = LocalDate.now();
     }

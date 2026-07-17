@@ -6,9 +6,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ifba.sipapi.config.handler.APIException;
-import com.ifba.sipapi.mail.domain.EmailData;
-import com.ifba.sipapi.user.domain.User;
+import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.handler.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,25 +30,15 @@ public class TokenService {
     @Value("${security.token.jwt.expiration}")
     private Long expiration;
 
-    public String generateTokenUser(User user) {
+    public String generateTokenUser(Beneficiario beneficiario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("SIP")
-                    .withSubject(user.getUsername())
-                    .withClaim("role", user.getRole().name())
+                    .withIssuer("pedrolcg")
+                    .withSubject(beneficiario.getEmail())
                     .withExpiresAt(generateExpirationTime())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
-            throw APIException.build(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao gerar token: " + exception.getMessage());
-        }
-    }
-
-    public String generateTokenToEmail(EmailData emailData) {
-        try {
-            String subjectJson = objectMapper.writeValueAsString(emailData);
-            return generateTokenInternal(subjectJson);
-        } catch (JsonProcessingException exception) {
             throw APIException.build(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao gerar token: " + exception.getMessage());
         }
     }
@@ -58,7 +47,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("SIP")
+                    .withIssuer("pedrolcg")
                     .withSubject(subject)
                     .withExpiresAt(generateExpirationTime())
                     .sign(algorithm);
@@ -71,7 +60,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("SIP")
+                    .withIssuer("pedrolcg")
                     .build()
                     .verify(token)
                     .getSubject();

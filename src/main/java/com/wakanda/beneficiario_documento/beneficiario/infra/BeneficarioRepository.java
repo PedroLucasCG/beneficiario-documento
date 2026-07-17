@@ -14,4 +14,6 @@ public interface BeneficarioRepository {
     List<Beneficiario> retornarTodosBeneficiarios();
 
     void deletarBeneficiario(Beneficiario beneficiario);
+
+    Beneficiario findByEmail(String email);
 }

@@ -48,4 +48,12 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
         beneficiarioH2Repository.delete(beneficiario);
         log.info("[finaliza] BeneficarioInfraRepository - deletarBeneficiario");
     }
+
+    @Override
+    public Beneficiario findByEmail(String email) {
+        log.info("[inicio] BeneficarioInfraRepository - findByEmail");
+
+        log.info("[finaliza] BeneficarioInfraRepository - findByEmail");
+        return null;
+    }
 }

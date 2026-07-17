@@ -1,7 +1,5 @@
 package com.wakanda.beneficiario_documento.config.security;
 
-
-import com.ifba.sipapi.config.websocket.JwtWsPreAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final SecurityFilter securityFilter;
-    private final JwtWsPreAuthFilter wsFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,13 +39,9 @@ public class SecurityConfiguration {
                                 "v3/api-docs",
                                 "user/account/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.POST, "authentication/register-admin").hasRole("ROOT")
-                        .requestMatchers(HttpMethod.POST, "items/admin/**").hasRole("ADMIN")
-                        .requestMatchers("user/root/**").hasRole("ROOT")
                         .requestMatchers(HttpMethod.POST, "authentication/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(wsFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

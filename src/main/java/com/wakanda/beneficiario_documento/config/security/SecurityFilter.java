@@ -1,8 +1,7 @@
 package com.wakanda.beneficiario_documento.config.security;
 
-
-import com.ifba.sipapi.config.handler.ErrorApiResponse;
-import com.ifba.sipapi.user.infra.UserRepository;
+import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
+import com.wakanda.beneficiario_documento.handler.ErrorApiResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +22,7 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final UserRepository userRepository;
+    private final BeneficarioRepository beneficarioRepository;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request,
@@ -33,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             var token = this.recoverToken(request);
             if (token != null) {
                 var username = tokenService.validateToken(token);
-                var userDetails = userRepository.findByEmail(username)
+                var userDetails = beneficarioRepository.findByEmail(username)
                         .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
                 var authentication = new UsernamePasswordAuthenticationToken(
