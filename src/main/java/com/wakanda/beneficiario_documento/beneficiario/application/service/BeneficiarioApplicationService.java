@@ -47,6 +47,7 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
         return beneficiarioListResponse;
     }
 
+    @Override
     public Beneficiario buscarBeneficiarioPorId(UUID id) {
         log.info("[inicio] BeneficiarioApplicationService - buscarBeneficiarioPorId");
         Beneficiario beneficiario = beneficarioRepository.buscarBeneficiarioPorId(id).orElseThrow(() ->

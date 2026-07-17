@@ -3,20 +3,25 @@ package com.wakanda.beneficiario_documento.documento.application.service;
 import com.wakanda.beneficiario_documento.DataHelper;
 import com.wakanda.beneficiario_documento.beneficiario.application.service.BeneficiarioApplicationService;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
+import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoListResponse;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvarRequest;
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
 import com.wakanda.beneficiario_documento.documento.domain.Documento;
 import com.wakanda.beneficiario_documento.documento.infra.DocumentoRepository;
+import com.wakanda.beneficiario_documento.handler.APIException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -30,6 +35,8 @@ class DocumentoApplicationServiceTest {
     private DocumentoRepository documentoRepository;
     @Mock
     private BeneficiarioApplicationService beneficiarioApplicationService;
+    @Mock
+    private BeneficarioRepository beneficarioRepository;
 
     @Test
     void salvarDocumentoComSucesso() {
@@ -62,5 +69,20 @@ class DocumentoApplicationServiceTest {
         verify(beneficiarioApplicationService, times(1)).buscarBeneficiarioPorId(any());
         assertEquals(DocumentoListResponse.class, documentoListResponses.get(0).getClass());
         assertEquals(documentos.size(), documentoListResponses.size());
+    }
+
+    @Test
+    void buscarDocumentosPorIdBeneficiarioComFalhaNotFound() {
+        Beneficiario beneficiario = DataHelper.createBeneficiario();
+
+        doThrow(APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"))
+                .when(beneficiarioApplicationService).buscarBeneficiarioPorId(any());
+
+        var exception = assertThrows(APIException.class, () -> {
+            service.retornarDocumentosBeneficiario(beneficiario.getId());
+        });
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusException());
+        verify(documentoRepository, times(0)).retornarTodosDocumentoBeneficiario(any());
+        verify(beneficiarioApplicationService, times(1)).buscarBeneficiarioPorId(any());
     }
 }
