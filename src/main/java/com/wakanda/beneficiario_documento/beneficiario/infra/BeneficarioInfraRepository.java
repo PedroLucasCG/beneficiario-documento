@@ -52,8 +52,8 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
     @Override
     public Beneficiario findByEmail(String email) {
         log.info("[inicio] BeneficarioInfraRepository - findByEmail");
-
+        Beneficiario beneficiario = beneficiarioH2Repository.findByEmail(email);
         log.info("[finaliza] BeneficarioInfraRepository - findByEmail");
-        return null;
+        return beneficiario;
     }
 }
