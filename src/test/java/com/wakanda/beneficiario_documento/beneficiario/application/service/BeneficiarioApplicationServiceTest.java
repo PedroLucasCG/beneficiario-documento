@@ -10,16 +10,17 @@ import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSal
 import com.wakanda.beneficiario_documento.documento.application.api.DocumentoSalvoResponse;
 import com.wakanda.beneficiario_documento.documento.application.service.DocumentoService;
 import com.wakanda.beneficiario_documento.documento.domain.Documento;
+import com.wakanda.beneficiario_documento.handler.APIException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -100,4 +101,30 @@ class BeneficiarioApplicationServiceTest {
         assertEquals(0, beneficiarioListResponses.size());
     }
 
+    @Test
+    void deletarBeneficiarioComSucesso() {
+        Beneficiario beneficiario = DataHelper.createBeneficiario();
+
+        when(beneficarioRepository.buscarBeneficiarioPorId(any())).thenReturn(beneficiario);
+
+        Beneficiario beneficiarioDeletado = service.deleteBeneficiario(beneficiario.getId());
+
+        verify(beneficarioRepository, times(1)).buscarBeneficiarioPorId(any());
+        assertEquals(Beneficiario.class, beneficiarioDeletado.getClass());
+        assertEquals(beneficiario.getId(), beneficiarioDeletado.getId());
+    }
+
+    @Test
+    void deletarBeneficiarioComFalha404() {
+        Beneficiario beneficiario = DataHelper.createBeneficiario();
+
+        doThrow(APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"))
+                .when(beneficarioRepository).buscarBeneficiarioPorId(any());
+
+        var exception = assertThrows(APIException.class, () -> {
+            service.deleteBeneficiario(beneficiario.getId());
+        });
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusException());
+        verify(beneficarioRepository, times(1)).buscarBeneficiarioPorId(any());
+    }
 }
