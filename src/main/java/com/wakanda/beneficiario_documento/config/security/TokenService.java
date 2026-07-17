@@ -4,8 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.handler.APIException;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +20,6 @@ import java.time.ZoneOffset;
 @RequiredArgsConstructor
 @Log4j2
 public class TokenService {
-    private final ObjectMapper objectMapper;
-
     @Value("${security.token.jwt.secret}")
     private String secret;
 
@@ -36,19 +32,6 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("pedrolcg")
                     .withSubject(beneficiario.getEmail())
-                    .withExpiresAt(generateExpirationTime())
-                    .sign(algorithm);
-        } catch (JWTCreationException exception) {
-            throw APIException.build(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao gerar token: " + exception.getMessage());
-        }
-    }
-
-    private String generateTokenInternal(String subject) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.create()
-                    .withIssuer("pedrolcg")
-                    .withSubject(subject)
                     .withExpiresAt(generateExpirationTime())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

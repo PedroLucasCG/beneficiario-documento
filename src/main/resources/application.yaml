@@ -22,3 +22,9 @@ springdoc:
   api-docs:
     enabled: true
     path: /v1/api-docs
+
+security:
+  token:
+    jwt:
+      secret: pedrolucascg
+      expiration: 8
