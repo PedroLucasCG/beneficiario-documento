@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento.beneficiario.domain;
 
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioAtualizarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.documento.domain.Documento;
 import jakarta.persistence.*;
@@ -35,5 +36,12 @@ public class Beneficiario {
         this.telefone = beneficiarioSalvarRequest.getTelefone();
         this.dataNascimento = beneficiarioSalvarRequest.getDataNascimento();
         this.dataInclusao = LocalDate.now();
+    }
+
+    public void atualizar(BeneficiarioAtualizarRequest beneficiarioAtualizarRequest) {
+        this.nome = beneficiarioAtualizarRequest.getNome();
+        this.telefone = beneficiarioAtualizarRequest.getTelefone();
+        this.dataNascimento = beneficiarioAtualizarRequest.getDataNascimento();
+        this.dataAtualizacao = LocalDate.now();
     }
 }

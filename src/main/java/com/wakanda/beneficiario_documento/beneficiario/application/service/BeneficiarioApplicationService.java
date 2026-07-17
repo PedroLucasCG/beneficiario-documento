@@ -64,6 +64,6 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
         beneficiario.atualizar(beneficiarioAtualizarRequest);
         Beneficiario beneficiarioAtualizado = beneficarioRepository.salvarBeneficiario(beneficiario);
         log.info("[finaliza] BeneficiarioApplicationService - atualizarBeneficiario");
-        return null;
+        return beneficiarioAtualizado;
     }
 }
