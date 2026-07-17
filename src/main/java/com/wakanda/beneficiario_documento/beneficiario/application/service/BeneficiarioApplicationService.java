@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +26,13 @@ import java.util.UUID;
 public class BeneficiarioApplicationService implements BeneficiarioService {
     private final BeneficarioRepository beneficarioRepository;
     private final DocumentoService documentoService;
-    private final BeneficiarioH2Repository beneficiarioH2Repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public BeneficiarioSalvoResponse salvarBeneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
         log.info("[inicio] BeneficiarioApplicationService - salvarBeneficiario");
+        gerarSenhaSegura(beneficiarioSalvarRequest);
         Beneficiario beneficiario = new Beneficiario(beneficiarioSalvarRequest);
         var beneficiarioSalvo = beneficarioRepository.salvarBeneficiario(beneficiario);
         List<DocumentoSalvoResponse> documentoSalvoResponses
@@ -67,5 +69,12 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
         beneficarioRepository.deletarBeneficiario(beneficiario);
         log.info("[finaliza] BeneficiarioApplicationService - deleteBeneficiario");
         return beneficiario;
+    }
+
+    private void gerarSenhaSegura(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
+        log.info("[inicio] BeneficiarioApplicationService - gerarSenhaSegura");
+        beneficiarioSalvarRequest
+                .atualizarParaSenhaSegura(passwordEncoder.encode(beneficiarioSalvarRequest.getSenha()));
+        log.info("[finaliza] BeneficiarioApplicationService - gerarSenhaSegura");
     }
 }

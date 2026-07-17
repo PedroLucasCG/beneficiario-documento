@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jspecify.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,4 +34,8 @@ public class BeneficiarioSalvarRequest {
     @NotNull
     private LocalDate dataNascimento;
     private List<DocumentoSalvarRequest> documentosSalvarRequests;
+
+    public void atualizarParaSenhaSegura(@Nullable String senhaSegura) {
+        this.senha = senhaSegura;
+    }
 }
