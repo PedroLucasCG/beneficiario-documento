@@ -29,7 +29,7 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
     public Beneficiario buscarBeneficiarioPorId(UUID id) {
         log.info("[inicio] BeneficarioInfraRepository - buscarBeneficiarioPorId");
         Beneficiario beneficiario = beneficiarioH2Repository.findById(id).orElseThrow(() ->
-                APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"));;
+                APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"));
         log.info("[finaliza] BeneficarioInfraRepository - buscarBeneficiarioPorId");
         return beneficiario;
     }
@@ -52,7 +52,8 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
     @Override
     public Beneficiario findByEmail(String email) {
         log.info("[inicio] BeneficarioInfraRepository - findByEmail");
-        Beneficiario beneficiario = beneficiarioH2Repository.findByEmail(email);
+        Beneficiario beneficiario = beneficiarioH2Repository.findByEmail(email).orElseThrow(() ->
+                APIException.build(HttpStatus.NOT_FOUND, "Email informando não pertence a um beneficiário"));
         log.info("[finaliza] BeneficarioInfraRepository - findByEmail");
         return beneficiario;
     }
