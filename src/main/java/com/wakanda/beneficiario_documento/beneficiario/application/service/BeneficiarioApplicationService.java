@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento.beneficiario.application.service;
 
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioAtualizarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioListResponse;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvoResponse;
@@ -54,5 +55,15 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
                 APIException.build(HttpStatus.NOT_FOUND, "Beneficiario informado não encontrado"));
         log.info("[finaliza] BeneficiarioApplicationService - buscarBeneficiarioPorId");
         return beneficiario;
+    }
+
+    @Override
+    public Beneficiario atualizarBeneficiario(BeneficiarioAtualizarRequest beneficiarioAtualizarRequest, UUID idBeneficiario) {
+        log.info("[inicio] BeneficiarioApplicationService - atualizarBeneficiario");
+        Beneficiario beneficiario = buscarBeneficiarioPorId(idBeneficiario);
+        beneficiario.atualizar(beneficiarioAtualizarRequest);
+        Beneficiario beneficiarioAtualizado = beneficarioRepository.salvarBeneficiario(beneficiario);
+        log.info("[finaliza] BeneficiarioApplicationService - atualizarBeneficiario");
+        return null;
     }
 }

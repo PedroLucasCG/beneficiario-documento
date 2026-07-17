@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento.beneficiario.application.service;
 
+import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioAtualizarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioListResponse;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvarRequest;
 import com.wakanda.beneficiario_documento.beneficiario.application.api.BeneficiarioSalvoResponse;
@@ -14,4 +15,6 @@ public interface BeneficiarioService {
     List<BeneficiarioListResponse> retornarTodosBeneficiarios();
 
     Beneficiario buscarBeneficiarioPorId(UUID id);
+
+    Beneficiario atualizarBeneficiario(BeneficiarioAtualizarRequest beneficiarioAtualizarRequest, UUID idBeneficiario);
 }
