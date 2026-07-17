@@ -34,6 +34,10 @@ public class DataHelper {
         );
     }
 
+    public static Documento getDocumento() {
+        return Documento.builder().nome("RG").build();
+    }
+
     public static List<Beneficiario> getBeneficiarios() {
         return List.of(
                 createBeneficiario(),

@@ -99,4 +99,5 @@ class BeneficiarioApplicationServiceTest {
         verify(beneficarioRepository, times(1)).retornarTodosBeneficiarios();
         assertEquals(0, beneficiarioListResponses.size());
     }
+
 }
