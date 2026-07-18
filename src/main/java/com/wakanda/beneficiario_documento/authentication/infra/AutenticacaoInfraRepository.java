@@ -13,8 +13,8 @@ public class AutenticacaoInfraRepository implements AutenticacaoRepository {
     @Override
     public AuthUser salvarUsuario(AuthUser authUser) {
         log.info("[inicio] AutenticacaoInfraRepository - salvarUsuario");
-
+        AuthUser authUserSalvo = authUserH2Repository.save(authUser);
         log.info("[finaliza] AutenticacaoInfraRepository - salvarUsuario");
-        return null;
+        return authUserSalvo;
     }
 }
