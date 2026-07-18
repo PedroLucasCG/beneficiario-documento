@@ -7,16 +7,19 @@ import com.wakanda.beneficiario_documento.authentication.domain.AuthUser;
 import com.wakanda.beneficiario_documento.authentication.infra.AutenticacaoRepository;
 import com.wakanda.beneficiario_documento.config.security.TokenService;
 import com.wakanda.beneficiario_documento.handler.APIException;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

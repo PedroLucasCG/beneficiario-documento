@@ -23,6 +23,6 @@ public class AutenticacaoRestController implements AutenticacaoAPI {
         log.info("[inicio] AutenticacaoRestController - login");
         AutenticacaoResponse autenticacaoResponse = autenticacaoService.login(autenticaticaoRequest);
         log.info("[finaliza] AutenticacaoRestController - login");
-        return null;
+        return autenticacaoResponse;
     }
 }
