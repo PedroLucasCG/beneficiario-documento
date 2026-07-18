@@ -15,5 +15,5 @@ public interface BeneficarioRepository {
 
     void deletarBeneficiario(Beneficiario beneficiario);
 
-    Beneficiario findByEmail(String email);
+    Beneficiario encontrarPorEmail(String email);
 }

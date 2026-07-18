@@ -19,17 +19,13 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Beneficiario implements UserDetails {
+public class Beneficiario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(nullable = false)
     private String nome;
     private String telefone;
-    @Column(nullable = false, unique = true)
-    private String email;
-    @Column(nullable = false)
-    private String senha;
     @Column(nullable = false)
     private LocalDate dataNascimento;
     @Column(nullable = false)
@@ -53,20 +49,5 @@ public class Beneficiario implements UserDetails {
         this.email = beneficiarioAtualizarRequest.getEmail();
         this.dataNascimento = beneficiarioAtualizarRequest.getDataNascimento();
         this.dataAtualizacao = LocalDate.now();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public @Nullable String getPassword() {
-        return this.senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
     }
 }

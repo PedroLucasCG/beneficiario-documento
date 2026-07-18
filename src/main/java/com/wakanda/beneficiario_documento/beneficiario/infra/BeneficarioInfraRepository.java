@@ -50,7 +50,7 @@ public class BeneficarioInfraRepository implements BeneficarioRepository {
     }
 
     @Override
-    public Beneficiario findByEmail(String email) {
+    public Beneficiario encontrarPorEmail(String email) {
         log.info("[inicio] BeneficarioInfraRepository - findByEmail");
         Beneficiario beneficiario = beneficiarioH2Repository.findByEmail(email).orElseThrow(() ->
                 APIException.build(HttpStatus.NOT_FOUND, "Email informando não pertence a um beneficiário"));
