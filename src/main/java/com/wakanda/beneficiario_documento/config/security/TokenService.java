@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.wakanda.beneficiario_documento.authentication.domain.AuthUser;
 import com.wakanda.beneficiario_documento.beneficiario.domain.Beneficiario;
 import com.wakanda.beneficiario_documento.handler.APIException;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,12 @@ public class TokenService {
     @Value("${security.token.jwt.expiration}")
     private Long expiration;
 
-    public String generateTokenUser(Beneficiario beneficiario) {
+    public String generateTokenUser(AuthUser authUser) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("pedrolcg")
-                    .withSubject(beneficiario.getEmail())
+                    .withSubject(authUser.getEmail())
                     .withExpiresAt(generateExpirationTime())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

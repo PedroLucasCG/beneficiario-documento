@@ -1,6 +1,7 @@
 package com.wakanda.beneficiario_documento.config.security;
 
-import com.wakanda.beneficiario_documento.beneficiario.infra.BeneficarioRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wakanda.beneficiario_documento.authentication.infra.AutenticacaoRepository;
 import com.wakanda.beneficiario_documento.handler.ErrorApiResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,17 +23,19 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final BeneficarioRepository beneficarioRepository;
+    private final AutenticacaoRepository autenticacaoRepository;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request,
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
         try {
+            String path = request.getRequestURI();
+
             var token = this.recoverToken(request);
             if (token != null) {
                 var username = tokenService.validateToken(token);
-                var userDetails = beneficarioRepository.encontrarPorEmail(username);
+                var userDetails = autenticacaoRepository.encontrarPorEmail(username);
 
                 var authentication = new UsernamePasswordAuthenticationToken(
                         userDetails,
@@ -49,7 +52,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                     .message("Usuário não encontrado ou token inválido.")
                     .description("Faça login novamente ou busque ajuda do suporte.")
                     .build();
-            var mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            var mapper = new ObjectMapper();
             var json = mapper.writeValueAsString(errorResponse);
 
             response.getWriter().write(json);

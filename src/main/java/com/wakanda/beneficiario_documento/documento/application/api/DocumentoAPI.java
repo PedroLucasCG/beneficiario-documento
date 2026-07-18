@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/beneficiario/{idBeneficiario}/documento")
+@RequestMapping("/v1/beneficiario/{idBeneficiario}/documento")
 public interface DocumentoAPI {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

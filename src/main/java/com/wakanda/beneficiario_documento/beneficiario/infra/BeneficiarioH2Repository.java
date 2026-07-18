@@ -15,6 +15,4 @@ public interface BeneficiarioH2Repository extends JpaRepository<Beneficiario, UU
     JOIN FETCH b.documentos
     """)
     List<Beneficiario> findAllBeneficiarioWithDocuments();
-
-    Optional<Beneficiario> findByEmail(String email);
 }

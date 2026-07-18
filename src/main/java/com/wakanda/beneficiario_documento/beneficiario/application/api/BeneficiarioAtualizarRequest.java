@@ -18,9 +18,6 @@ public class BeneficiarioAtualizarRequest {
     @NotBlank
     private String nome;
     private String telefone;
-    @NotBlank
-    @Email
-    private String email;
     @NotNull
     private LocalDate dataNascimento;
 }

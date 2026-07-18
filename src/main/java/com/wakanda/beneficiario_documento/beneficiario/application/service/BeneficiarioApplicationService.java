@@ -26,13 +26,11 @@ import java.util.UUID;
 public class BeneficiarioApplicationService implements BeneficiarioService {
     private final BeneficarioRepository beneficarioRepository;
     private final DocumentoService documentoService;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public BeneficiarioSalvoResponse salvarBeneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
         log.info("[inicio] BeneficiarioApplicationService - salvarBeneficiario");
-        gerarSenhaSegura(beneficiarioSalvarRequest);
         Beneficiario beneficiario = new Beneficiario(beneficiarioSalvarRequest);
         var beneficiarioSalvo = beneficarioRepository.salvarBeneficiario(beneficiario);
         List<DocumentoSalvoResponse> documentoSalvoResponses
@@ -69,12 +67,5 @@ public class BeneficiarioApplicationService implements BeneficiarioService {
         beneficarioRepository.deletarBeneficiario(beneficiario);
         log.info("[finaliza] BeneficiarioApplicationService - deleteBeneficiario");
         return beneficiario;
-    }
-
-    private void gerarSenhaSegura(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
-        log.info("[inicio] BeneficiarioApplicationService - gerarSenhaSegura");
-        beneficiarioSalvarRequest
-                .atualizarParaSenhaSegura(passwordEncoder.encode(beneficiarioSalvarRequest.getSenha()));
-        log.info("[finaliza] BeneficiarioApplicationService - gerarSenhaSegura");
     }
 }

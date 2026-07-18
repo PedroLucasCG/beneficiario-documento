@@ -38,7 +38,6 @@ public class Beneficiario {
     public Beneficiario(BeneficiarioSalvarRequest beneficiarioSalvarRequest) {
         this.nome = beneficiarioSalvarRequest.getNome();
         this.telefone = beneficiarioSalvarRequest.getTelefone();
-        this.email = beneficiarioSalvarRequest.getEmail();
         this.dataNascimento = beneficiarioSalvarRequest.getDataNascimento();
         this.dataInclusao = LocalDate.now();
     }
@@ -46,7 +45,6 @@ public class Beneficiario {
     public void atualizar(BeneficiarioAtualizarRequest beneficiarioAtualizarRequest) {
         this.nome = beneficiarioAtualizarRequest.getNome();
         this.telefone = beneficiarioAtualizarRequest.getTelefone();
-        this.email = beneficiarioAtualizarRequest.getEmail();
         this.dataNascimento = beneficiarioAtualizarRequest.getDataNascimento();
         this.dataAtualizacao = LocalDate.now();
     }

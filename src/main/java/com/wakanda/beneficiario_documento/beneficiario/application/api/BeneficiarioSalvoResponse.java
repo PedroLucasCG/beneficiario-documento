@@ -17,14 +17,12 @@ public class BeneficiarioSalvoResponse {
     private UUID id;
     private String nome;
     private String telefone;
-    private String email;
     private LocalDate dataNascimento;
     private List<DocumentoSalvoResponse> documentos;
 
     public BeneficiarioSalvoResponse(Beneficiario beneficiarioSalvo) {
         this.id = beneficiarioSalvo.getId();
         this.nome = beneficiarioSalvo.getNome();
-        this.email = beneficiarioSalvo.getEmail();
         this.telefone = beneficiarioSalvo.getTelefone();
         this.dataNascimento = beneficiarioSalvo.getDataNascimento();
         this.documentos = DocumentoSalvoResponse.converte(beneficiarioSalvo.getDocumentos());
@@ -34,7 +32,6 @@ public class BeneficiarioSalvoResponse {
             (Beneficiario beneficiarioSalvo, List<DocumentoSalvoResponse> documentoSalvoResponses) {
         this.id = beneficiarioSalvo.getId();
         this.nome = beneficiarioSalvo.getNome();
-        this.email = beneficiarioSalvo.getEmail();
         this.telefone = beneficiarioSalvo.getTelefone();
         this.dataNascimento = beneficiarioSalvo.getDataNascimento();
         this.documentos = documentoSalvoResponses;

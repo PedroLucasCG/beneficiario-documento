@@ -31,15 +31,15 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "public/**",
-                                "v3/api-docs/**",
-                                "swagger-ui/**",
-                                "swagger-ui.html",
-                                "v3/api-docs/swagger-config",
-                                "v3/api-docs",
-                                "user/account/**"
+                                "/public/**",
+                                "/v1/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v1/api-docs/swagger-config",
+                                "/v1/api-docs",
+                                "/swagger-ui/index.html"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.POST, "authentication/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/authentication/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
