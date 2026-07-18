@@ -23,10 +23,10 @@ public class AutenticacaoInfraRepository implements AutenticacaoRepository {
 
     @Override
     public AuthUser encontrarPorEmail(String email) {
-        log.info("[inicio] BeneficarioInfraRepository - findByEmail");
+        log.info("[inicio] BeneficarioInfraRepository - encontrarPorEmail");
         AuthUser authUser = authUserH2Repository.findByEmail(email).orElseThrow(() ->
                 APIException.build(HttpStatus.NOT_FOUND, "Email informando não pertence a um beneficiário"));
-        log.info("[finaliza] BeneficarioInfraRepository - findByEmail");
+        log.info("[finaliza] BeneficarioInfraRepository - encontrarPorEmail");
         return authUser;
     }
 }
