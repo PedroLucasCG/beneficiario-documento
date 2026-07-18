@@ -1,5 +1,6 @@
 package com.wakanda.beneficiario_documento.authentication.domain;
 
+import com.wakanda.beneficiario_documento.authentication.application.api.AutenticaticacaoRegistroRequest;
 import jakarta.persistence.Column;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,11 @@ public class AuthUser implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String senha;
+
+    public AuthUser(AutenticaticacaoRegistroRequest autenticaticacaoRegistroRequest) {
+        this.email = autenticaticacaoRegistroRequest.getEmail();
+        this.senha = autenticaticacaoRegistroRequest.getSenha();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
