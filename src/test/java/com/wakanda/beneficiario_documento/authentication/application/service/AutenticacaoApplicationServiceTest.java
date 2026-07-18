@@ -7,6 +7,7 @@ import com.wakanda.beneficiario_documento.authentication.application.api.Autenti
 import com.wakanda.beneficiario_documento.authentication.domain.AuthUser;
 import com.wakanda.beneficiario_documento.authentication.infra.AutenticacaoRepository;
 import com.wakanda.beneficiario_documento.config.security.TokenService;
+import com.wakanda.beneficiario_documento.handler.APIException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -82,14 +84,18 @@ class AutenticacaoApplicationServiceTest {
     }
 
     @Test
-    void fazerLoginComFalhaUsuarioNaoEncontrado() {
-        String token = DataHelper.getToken();
-        Authentication authentication = DataHelper.getAuthentication();
+    void fazerLoginComFalha() {
         AutenticacaoRequest autenticacaoRequest = DataHelper.getAutenticacaoRequest();
 
-        when(authenticationManager.authenticate(any())).thenReturn(authentication);
-        when(tokenService.generateTokenUser(any())).thenReturn(token);
+        doThrow(APIException.build(HttpStatus.FORBIDDEN,
+                "Erro ao autenticar o usuario com e-mail " + autenticacaoRequest.getEmail()))
+                .when(authenticationManager).authenticate(any());
 
-        AutenticacaoResponse autenticacaoResponse = service.login(autenticacaoRequest);
+        var exception = assertThrows(APIException.class, () -> {
+            service.login(autenticacaoRequest);
+        });
+        assertEquals(HttpStatus.FORBIDDEN, exception.getStatusException());
+        verify(authenticationManager, times(1)).authenticate(any());
+        verify(tokenService, times(0)).generateTokenUser(any());
     }
 }
