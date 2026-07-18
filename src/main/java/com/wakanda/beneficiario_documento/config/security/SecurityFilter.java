@@ -30,8 +30,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
         try {
-            String path = request.getRequestURI();
-
             var token = this.recoverToken(request);
             if (token != null) {
                 var username = tokenService.validateToken(token);

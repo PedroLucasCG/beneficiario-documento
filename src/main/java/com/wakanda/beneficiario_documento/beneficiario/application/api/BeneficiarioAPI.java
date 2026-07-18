@@ -16,7 +16,7 @@ public interface BeneficiarioAPI {
     BeneficiarioSalvoResponse salvarBeneficarioComDocumentos(
             @RequestBody @Valid BeneficiarioSalvarRequest beneficiarioSAlvarRequest);
 
-    @GetMapping
+    @GetMapping("/todos")
     @ResponseStatus(HttpStatus.OK)
     List<BeneficiarioListResponse> retornarTodosBeneficiarios();
 
